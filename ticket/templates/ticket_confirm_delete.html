@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Ticket</title>
+</head>
+<body>
+    <h1>Delete Ticket</h1>
+    <p>Are you sure you want to delete "{{ ticket.ticket_subject }}"?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input

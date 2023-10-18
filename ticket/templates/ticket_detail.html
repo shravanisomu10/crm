@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ ticket.ticket_subject }}</title>
+</head>
+<body>
+    <h1>{{ ticket.ticket_subject }}</h1>
+    <p><strong>Customer Name:</strong> {{ ticket.customer_name }}</p>
+    <p><strong>Ticket Status:</strong> {{ ticket.get_ticket_status_display }}</p>
+    <p>{{ ticket.ticket_body }}</p>
+    <a href="{% url 'ticket_edit' ticket.pk %}">Edit</a>
+    <form method="POST" action="{% url 'ticket_delete' ticket.pk %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+    <a href="{% url 'ticket_list' %}">Back to List</a>
+</body>
+</html>

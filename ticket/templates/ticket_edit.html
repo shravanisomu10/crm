@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Ticket</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Edit Ticket</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" value="{{ ticket.customer_name }}" required>
+        <br>
+        <label for="subject">Subject:</label>
+        <input type="text" name="ticket_subject" value="{{ ticket.ticket_subject }}" required>
+        <br>
+        <label for="ticket_body">Ticket Body:</label>
+        <textarea name="ticket_body" required>{{ ticket.ticket_body }}</textarea>
+        <br>
+       
+        <label for="ticket_status">Ticket Status:</label>
+        <select name="ticket_status" required>
+            <option value="Open" {% if ticket.ticket_status == 'Open' %}selected{% endif %}>Open</option>
+            <option value="In Progress" {% if ticket.ticket_status == 'In Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Closed" {% if ticket.ticket_status == 'Closed' %}selected{% endif %}>Closed</option>
+        </select>
+        <br>
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #0066cc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .no-tickets {
+            font-style: italic;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: inline-block;
+        }
+
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .create-ticket-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-width: 150px;
+            background-color: #f7f7f7;
+            margin-top: 10px;
+        }
+
+        .create-ticket-container a {
+            display: block;
+            text-align: center;
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .create-ticket-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ticket List</h1>
+    {% if tickets %}
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Customer Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        {% for ticket in tickets %}
+        <tr>
+            <td><a href="{% url 'ticket_detail' ticket.pk %}">{{ ticket.ticket_subject }}</a></td>
+            <td>{{ ticket.customer_name }}</td>
+            <td>
+                {% if ticket.ticket_status == 'Open' %}
+                    <span style="color: green;">Open</span>
+                {% elif ticket.ticket_status == 'In Progress' %}
+                    <span style="color: orange;">In Progress</span>
+                {% elif ticket.ticket_status == 'Closed' %}
+                    <span style="color: red;">Closed</span>
+                {% else %}
+                    <span style="color: gray;">Unknown</span>
+                {% endif %}
+            </td>
+            <td class="action-buttons">
+                <a class="edit-button" href="{% url 'ticket_edit' ticket.id %}">Edit</a>
+                <a class="delete-button" href="{% url 'ticket_delete' ticket.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="no-tickets">No tickets found.</p>
+    {% endif %}
+    <div class="create-ticket-container">
+    <br><a href="{% url 'ticket_new' %}">Create New Ticket</a>
+</div>
+</body>
+</html>
